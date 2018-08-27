@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <UserSecretsId>aspnet-KorDevAus-5FFC6171-EEEF-45D3-9C82-D5FFA3E9F55B</UserSecretsId>
+    <UserSecretsId>aspnet-KorDevAus-54BE975D-EB1D-4E44-A569-37BE2E24DD33</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

@@ -106,3 +106,4 @@ typings/
 
 # Serverless directories
 .serverless
+src/KorDevAus/appsettings\.Development\.json
