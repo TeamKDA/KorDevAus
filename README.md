@@ -4,6 +4,7 @@
 ## Quick Start
 ```sh
 dotnet restore
+dotnet dev-certs https --trust
 export ASPNETCORE_ENVIRONMENT=Development
 dotnet run
 ```
