@@ -14,10 +14,34 @@ html, body {
 
 .home-index h1 {
     font-size: 1.5rem;
+    color: #fff;
     line-height: 2.5rem;
     margin-top: 100px;
     width: 100%;
     margin-left: 10px;
+}
+
+.hello {
+    margin-top: 10vh;
+    /* text-align: center; */
+}
+
+.action-buttons {
+    margin: 30px 0 0 0;
+    text-align: center;
+}
+
+.btn-join {
+    background-color: transparent;
+    border-radius: 30px;
+    border: solid 1px #fff;
+    padding: 10px 60px;
+    color: #fff;
+}
+
+.btn-join:hover {
+    color: #fff;
+    font-weight: 800;
 }
 
 .home-index pre {
@@ -80,19 +104,4 @@ pre .keyword a.join:hover {
     .action-buttons {
         margin: 60px 0 0 0;
     }
-    
-    .btn-join {
-        background-color: transparent;
-        border-radius: 30px;
-        border: solid 1px #fff;
-        padding: 10px 60px;
-        color: #fff;
-    }
-
-    .btn-join:hover {
-        /* border-width: 2px; */
-        color: #fff;
-        font-weight: 800;
-    }
-
 }
