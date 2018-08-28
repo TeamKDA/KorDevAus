@@ -17,8 +17,18 @@ namespace KorDevAus
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        {
+            var config = new ConfigurationBuilder()
+                             .SetBasePath(Directory.GetCurrentDirectory())
+                             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                             .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true)
+                             .AddEnvironmentVariables()
+                             .Build();
+
+            return WebHost.CreateDefaultBuilder(args)
+                          .UseConfiguration(config)
+                          .UseStartup<Startup>();
+        }
     }
 }
