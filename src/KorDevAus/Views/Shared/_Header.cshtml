@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-defaultx navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -11,9 +11,9 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a asp-area="" asp-controller="Home" asp-action="Index">지난 모임들</a></li>
-                <li><a asp-area="" asp-controller="Home" asp-action="About">멤버</a></li>
-                <li><a asp-area="" asp-controller="Home" asp-action="Contact">갤러리</a></li>
+                <li><a asp-area="" asp-controller="Meetups" asp-action="List">지난 모임들</a></li>
+                <li><a asp-area="" asp-controller="Members" asp-action="List">멤버</a></li>
+                <li><a asp-area="" asp-controller="Photos" asp-action="List">갤러리</a></li>
             </ul>
             <partial name="_LoginPartial" />
         </div>

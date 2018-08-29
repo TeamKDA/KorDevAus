@@ -1,0 +1,27 @@
+[
+    {
+        "outputFileName": "wwwroot/css/bundle.min.css",
+        "inputFiles": [
+            "wwwroot/lib/bootstrap/css/bootstrap.css",
+            "wwwroot/lib/animate.css/animate.css",
+            "wwwroot/css/site.css",
+            "wwwroot/css/header.css",
+            "wwwroot/css/home-index.css"
+        ]
+    },
+    {
+        "outputFileName": "wwwroot/js/bundle.min.js",
+        "inputFiles": [
+            "wwwroot/lib/stimulus/dist/stimulus.umd.js",
+            "wwwroot/lib/jquery/jquery.js",
+            "wwwroot/lib/bootstrap/js/bootstrap.js",
+            "wwwroot/js/site.js"
+        ],
+        "minify": {
+            "enabled": true,
+            "renameLocals": false
+        },
+        "sourceMap": false
+    }
+]
+  
