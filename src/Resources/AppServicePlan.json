@@ -1,0 +1,172 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "organisation": {
+      "type": "string",
+      "metadata": {
+        "description": "The organisation that the resource group or resource is owned by. Descriptive, used for metadata."
+      },
+      "allowedValues": [
+        "Team KDA"
+      ],
+      "defaultValue": "Team KDA"
+    },
+    "organisationCode": {
+      "type": "string",
+      "metadata": {
+        "description": "The organisation that the resource group or resource is owned by. Short, used for resource naming."
+      },
+      "allowedValues": [
+        "kda"
+      ],
+      "defaultValue": "kda"
+    },
+    "environment": {
+      "type": "string",
+      "metadata": {
+        "description": "Whether this resource is Dev/Test/Prod/etc."
+      },
+      "allowedValues": [
+        "LOCAL",
+        "DEVELOPMENT",
+        "TEST",
+        "PRODUCTION",
+        "ALL"
+      ],
+      "defaultValue": "DEVELOPMENT"
+    },
+    "environmentCode": {
+      "type": "string",
+      "metadata": {
+        "description": "Whether this resource is Dev/Test/Prod/etc."
+      },
+      "allowedValues": [
+        "lcl",
+        "dev",
+        "tst",
+        "prd",
+        "all"
+      ],
+      "defaultValue": "dev"
+    },
+    "location": {
+      "type": "string",
+      "metadata": {
+        "description": "The region where Application Insights instance is hosted."
+      },
+      "allowedValues": [
+        "australiasoutheast",
+        "australiaeast",
+        "southcentralus",
+        "[resourceGroup().location]"
+      ],
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "locationCode": {
+      "type": "string",
+      "metadata": {
+        "description": "The Azure region that the resource is deployed to."
+      },
+      "allowedValues": [
+        "ase",
+        "aue",
+        "usc"
+      ],
+      "defaultValue": "ase"
+    },
+    "resourceTypeSuffix": {
+      "type": "string",
+      "metadata": {
+        "description": "The suffix of resource type to identify multiple resources in case same resource type exists. eg) 01, 02, etc..."
+      },
+      "defaultValue": ""
+    },
+
+    "projectName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the project the resource group or resource was provisioned for."
+      },
+      "defaultValue": "NOT_SET"
+    },
+
+    "skuName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of SKU for App Service Plan."
+      },
+      "defaultValue": "S1"
+    },
+    "skuTier": {
+      "type": "string",
+      "metadata": {
+        "description": "The tier of SKU for App Service Plan."
+      },
+      "defaultValue": "Standard"
+    },
+    "skuSize": {
+      "type": "string",
+      "metadata": {
+        "description": "The size of SKU for App Service Plan."
+      },
+      "defaultValue": "S1"
+    },
+    "skuFamily": {
+      "type": "string",
+      "metadata": {
+        "description": "The family of SKU for App Service Plan."
+      },
+      "defaultValue": "S"
+    },
+    "skuCapacity": {
+      "type": "int",
+      "metadata": {
+        "description": "The capacity of SKU for App Service Plan."
+      },
+      "defaultValue": 1
+    }
+  },
+  "variables": {
+    "resourceNameLongTemplate": "[toLower(concat('{0}', '-', parameters('organisationCode'), '-', parameters('environmentCode'), '-', parameters('locationCode')))]",
+    "resourceNameShortTemplate": "[replace(variables('resourceNameLongTemplate'), '-', '')]",
+    "appServicePlan": {
+      "name": "[replace(variables('resourceNameLongTemplate'), '{0}', 'asplan')]",
+      "apiVersion": "[providers('Microsoft.Web', 'serverfarms').apiVersions[0]]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[parameters('skuName')]",
+        "tier": "[parameters('skuTier')]",
+        "size": "[parameters('skuSize')]",
+        "family": "[parameters('skuFamily')]",
+        "capacity": "[parameters('skuCapacity')]"
+      }
+    },
+    "tags": {
+      "organisation": "[parameters('organisation')]",
+      "environment": "[parameters('environment')]",
+      "projectName": "[parameters('projectName')]"
+    }
+  },
+  "resources": [
+    {
+      "comments": " = = = App Service Plan (Windows) = = = ",
+      "apiVersion": "[variables('appServicePlan').apiVersion]",
+      "type": "Microsoft.Web/serverfarms",
+      "name": "[variables('appServicePlan').name]",
+      "location": "[variables('appServicePlan').location]",
+      "tags": "[variables('tags')]",
+      "kind": "app",
+      "sku": "[variables('appServicePlan').sku]",
+      "properties": {
+        "name": "[variables('appServicePlan').name]"
+      }
+    }
+  ],
+  "outputs": {
+    "appServicePlanName": {
+      "type": "string",
+      "value": "[variables('appServicePlan').name]"
+    }
+  }
+}
