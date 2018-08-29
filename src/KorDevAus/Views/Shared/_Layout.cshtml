@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - KorDevAus</title>
     <partial name="_CSS" />
+    <script src="~/lib/turbolinks/turbolinks.js"></script>
+    <partial name="_JavaScript" />
+    @RenderSection("Scripts", required: false)
 </head>
-<body>
+<body class="layout-home">
     <partial name="_CookieConsentPartial" />
     <partial name="_Header" />
 
     <div class="container body-content">
         @RenderBody()
     </div>
-
-    <partial name="_JavaScript" />
-    @RenderSection("Scripts", required: false)
 </body>
 </html>

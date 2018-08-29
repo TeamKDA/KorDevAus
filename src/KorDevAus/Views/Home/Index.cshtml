@@ -1,6 +1,5 @@
 ﻿@{
     ViewData["Title"] = "Korean Developers Melbourne";
-    Layout = "_LayoutHome";
 }
 
 <div class="home-index">
@@ -32,11 +31,11 @@ return <span class="keyword"><a class="join" href="/join">Join(<span class="name
 
 @section scripts {
     <script>
-        (function() {
+        $(function() {
             $('pre').mouseover(function() {
                 $('.join').addClass('animated shake');
             })
-        })()
+        })
     </script>
 }
 

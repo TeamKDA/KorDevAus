@@ -5,7 +5,6 @@
 ```sh
 dotnet restore
 dotnet dev-certs https --trust
-export ASPNETCORE_ENVIRONMENT=Development
 dotnet run
 ```
 Go to https://localhost:5001/ in your browser
