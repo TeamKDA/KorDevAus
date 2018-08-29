@@ -1,0 +1,210 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "organisation": {
+      "type": "string",
+      "metadata": {
+        "description": "The organisation that the resource group or resource is owned by. Descriptive, used for metadata."
+      },
+      "allowedValues": [
+        "Team KDA"
+      ],
+      "defaultValue": "Team KDA"
+    },
+    "organisationCode": {
+      "type": "string",
+      "metadata": {
+        "description": "The organisation that the resource group or resource is owned by. Short, used for resource naming."
+      },
+      "allowedValues": [
+        "kda"
+      ],
+      "defaultValue": "kda"
+    },
+    "environment": {
+      "type": "string",
+      "metadata": {
+        "description": "Whether this resource is Dev/Test/Prod/etc."
+      },
+      "allowedValues": [
+        "LOCAL",
+        "DEVELOPMENT",
+        "TEST",
+        "PRODUCTION",
+        "ALL"
+      ],
+      "defaultValue": "DEVELOPMENT"
+    },
+    "environmentCode": {
+      "type": "string",
+      "metadata": {
+        "description": "Whether this resource is Dev/Test/Prod/etc."
+      },
+      "allowedValues": [
+        "lcl",
+        "dev",
+        "tst",
+        "prd",
+        "all"
+      ],
+      "defaultValue": "dev"
+    },
+    "location": {
+      "type": "string",
+      "metadata": {
+        "description": "The region where Application Insights instance is hosted."
+      },
+      "allowedValues": [
+        "australiasoutheast",
+        "australiaeast",
+        "southcentralus",
+        "[resourceGroup().location]"
+      ],
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "locationCode": {
+      "type": "string",
+      "metadata": {
+        "description": "The Azure region that the resource is deployed to."
+      },
+      "allowedValues": [
+        "ase",
+        "aue",
+        "usc"
+      ],
+      "defaultValue": "ase"
+    },
+    "resourceTypeSuffix": {
+      "type": "string",
+      "metadata": {
+        "description": "The suffix of resource type to identify multiple resources in case same resource type exists. eg) 01, 02, etc..."
+      },
+      "defaultValue": ""
+    },
+    "operation": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of operation that the function app performs. eg) common, sales, etc..."
+      },
+      "defaultValue": ""
+    },
+
+    "projectName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the project the resource group or resource was provisioned for."
+      },
+      "defaultValue": "NOT_SET"
+    },
+
+    "appInsightsInstrumentationKey": {
+      "type": "securestring",
+      "metadata": {
+        "description": "The instrumentation key of Application Insights to be bound."
+      }
+    },
+    "remoteDebuggingEnabled": {
+      "type": "bool",
+      "metadata": {
+        "description": "The value indicating whether to enable remote debugging or not."
+      },
+      "defaultValue": false
+    },
+    "remoteDebuggingVersion": {
+      "type": "string",
+      "metadata": {
+        "description": "The Visual Studio version of remote deubgging"
+      },
+      "allowedValues": [
+        "VS2012",
+        "VS2013",
+        "VS2015",
+        "VS2017"
+      ],
+      "defaultValue": "VS2017"
+    },
+    "use32bitWorkerProcess": {
+      "type": "bool",
+      "metadata": {
+        "description": "The value indicating whether to use 32bit worker process or not."
+      },
+      "defaultValue": true
+    }
+  },
+  "variables": {
+    "resourceNameLongTemplate": "[toLower(concat('{0}', '-', parameters('organisationCode'), '-', parameters('environmentCode'), '-', parameters('locationCode'), '-', '{1}'))]",
+    "resourceNameShortTemplate": "[replace(variables('resourceNameLongTemplate'), '-', '')]",
+    "appServicePlan": {
+      "name": "[replace(replace(variables('resourceNameLongTemplate'), '{0}', 'asplan'), '-{1}', '')]",
+      "apiVersion": "[providers('Microsoft.Web', 'serverfarms').apiVersions[0]]"
+    },
+    "webApp": {
+      "name": "[replace(replace(variables('resourceNameLongTemplate'), '{0}', concat('webapp', parameters('resourceTypeSuffix'))), '{1}', parameters('operation'))]",
+      "apiVersion": "[providers('Microsoft.Web', 'sites').apiVersions[0]]",
+      "location": "[parameters('location')]",
+      "appInsightsInstrumentationKey": "[parameters('appInsightsInstrumentationKey')]",
+      "remoteDebuggingEnabled": "[parameters('remoteDebuggingEnabled')]",
+      "remoteDebuggingVersion": "[parameters('remoteDebuggingVersion')]",
+      "use32bitWorkerProcess": "[parameters('use32bitWorkerProcess')]"
+    },
+    "tags": {
+      "organisation": "[parameters('organisation')]",
+      "environment": "[parameters('environment')]",
+      "projectName": "[parameters('projectName')]"
+    }
+  },
+  "resources": [
+    {
+      "comments": " = = = Web App = = = ",
+      "apiVersion": "[variables('webApp').apiVersion]",
+      "type": "Microsoft.Web/sites",
+      "name": "[variables('webApp').name]",
+      "location": "[variables('webApp').location]",
+      "tags": "[variables('tags')]",
+      "kind": "app",
+      "properties": {
+        "name": "[variables('webApp').name]",
+        "clientAffinityEnabled": true,
+        "httpsOnly": true,
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlan').name)]"
+      },
+      "resources": [
+        {
+          "comments": " = = = App settings = = = ",
+          "apiVersion": "[variables('webApp').apiVersion]",
+          "type": "config",
+          "name": "appsettings",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', variables('webApp').name)]"
+          ],
+          "properties": {
+            "APPINSIGHTS_INSTRUMENTATIONKEY": "[variables('webApp').appInsightsInstrumentationKey]"
+          }
+        },
+        {
+          "comments": " = = = Web Configs = = = ",
+          "apiVersion": "[variables('webApp').apiVersion]",
+          "type": "config",
+          "name": "web",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', variables('webApp').name)]"
+          ],
+          "properties": {
+            "remoteDebuggingEnabled": "[variables('webApp').remoteDebuggingEnabled]",
+            "remoteDebuggingVersion": "[variables('webApp').remoteDebuggingVersion]",
+            "use32BitWorkerProcess": "[variables('webApp').use32bitWorkerProcess]",
+            "alwaysOn": true,
+            "ftpsState": "Disabled"
+          }
+        }
+      ]
+    }
+  ],
+  "outputs": {
+    "hostname": {
+      "type": "string",
+      "value": "[concat('https://', reference(resourceId('Microsoft.Web/sites', variables('webApp').name), variables('webApp').apiVersion).hostNames[0])]"
+    }
+  }
+}
