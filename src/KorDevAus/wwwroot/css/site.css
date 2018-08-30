@@ -1,37 +1,47 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
-for details on configuring this project to bundle and minify static web assets. */
-body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿html, body {
+    width: 100%;
+    height: 100%;
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
+body {
+    padding-top: 92px;
+    padding-bottom: 20px;
+    color: #fff;
+    background-color: #000;
+}
+
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
+a {
+    color: #fff;
 }
 
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
+.page-title {
+    display: inline-block;
+    margin: 20px 0;
+    padding: 0 10px 10px 5px;
+    border-bottom: solid 1px rgba(107, 100, 100, 0.849);
+    font-size: 2.5rem;
 }
 
-/* QR code generator */
-#qrCode {
-    margin: 15px;
+.link-to-github {
+    background-color: transparent;
+    border-radius: 30px;
+    border: solid 1px #fff;
+    padding: 10px 30px;
+    color: #fff;
+    margin: 20px 0;
+    display: inline-block;
 }
 
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
-    }
+.link-to-github:hover {
+    color: #fff;
+}
+
+.need-help {
+    margin-top: 10vh;
+    text-align: center;
 }
