@@ -1,0 +1,10 @@
+@{
+    var siteUrl = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.PathBase}";
+    var heroImageUrl = $"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.PathBase}/images/hero.jpeg";
+}
+
+<meta property="og:url" content="@siteUrl" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="멜번 한인 개발자 모임, Korean Developers Melbourne" />
+<meta property="og:description" content="멜번 한인 개발자 모임, Korean Developers Melbourne" />
+<meta property="og:image" content="@heroImageUrl" />
