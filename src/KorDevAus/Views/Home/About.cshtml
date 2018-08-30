@@ -1,4 +1,8 @@
-﻿<div class="home-about">
+﻿@{
+    ViewData["Title"] = "About";
+}
+
+<div class="home-about">
     <h1 class="page-title">What we're about</h1>
 
     <h3 class="home-about__description-title-main">저희는 멜번에서 지난 2016년 2월을 시작으로 꾸준히 소프트웨어 개발의 다양한 영역에 관해 공유하는 모임을 갖고 있습니다.</h3>
@@ -16,5 +20,8 @@
         <li class="home-about__description-item">are speaking Korean, and</li>
         <li class="home-about__description-item">are willing to know and share the latest and newest technologies.</li>
     </ul>
+
+    <h4>구글, 페이스북, 트위터 계정으로 가입하시면 모임 공지 및 소식을 받아 보실 수 있습니다.</h4>
+    <a asp-area="AzureADB2C" asp-controller="Account" asp-action="SignIn" class="btn btn-empty margin-top-bottom-10">Join</a>
 
 </div>
