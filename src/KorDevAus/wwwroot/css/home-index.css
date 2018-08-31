@@ -46,6 +46,7 @@ pre .name {
 
 pre .keyword a.join {
     transition: all 0.3s ease;
+    color: #f00;
 }
 
 pre:hover .keyword a.join,
