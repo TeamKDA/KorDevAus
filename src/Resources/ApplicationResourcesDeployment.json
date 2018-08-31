@@ -368,7 +368,7 @@
       ]
     },
     "appInsights": {
-      "resourceId": "[resourceId('Microsoft.Insights/components', replace(replace(variables('resourceNameLongTemplate'), '{0}', concat('appins', parameters('appInsightsResourceTypeSuffix'))), '{1}', parameters('appInsightsOperation')))]",
+      "resourceId": "[resourceId('Microsoft.Insights/components', replace(replace(replace(variables('resourceNameLongTemplate'), '{0}', concat('appins', parameters('appInsightsResourceTypeSuffix'))), '{1}', parameters('appInsightsOperation')), concat('-', parameters('locationCode'), '-'), concat('-', parameters('appInsightsLocationCode'), '-')))]",
       "apiVersion": "[providers('Microsoft.Insights', 'components').apiVersions[0]]",
       "location": "[parameters('appInsightsLocation')]",
       "locationCode": "[parameters('appInsightsLocationCode')]",
