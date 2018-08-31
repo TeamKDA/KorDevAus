@@ -82,7 +82,7 @@
     "operation": {
       "type": "string",
       "metadata": {
-        "description": "The name of operation that the function app performs. eg) common, sales, etc..."
+        "description": "The name of operation that the resource performs. eg) common, sales, etc..."
       },
       "defaultValue": ""
     },

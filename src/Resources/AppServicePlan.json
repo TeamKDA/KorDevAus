@@ -82,6 +82,13 @@
       },
       "defaultValue": ""
     },
+    "operation": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of operation that the resource performs. eg) common, sales, etc..."
+      },
+      "defaultValue": ""
+    },
 
     "projectName": {
       "type": "string",

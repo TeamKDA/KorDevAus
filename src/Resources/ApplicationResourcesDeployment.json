@@ -53,7 +53,7 @@
     "location": {
       "type": "string",
       "metadata": {
-        "description": "The region where Application Insights instance is hosted."
+        "description": "The region where this resource is hosted."
       },
       "allowedValues": [
         "australiasoutheast",
@@ -66,7 +66,7 @@
     "locationCode": {
       "type": "string",
       "metadata": {
-        "description": "The Azure region that the resource is deployed to."
+        "description": "The Azure region that this resource is deployed to."
       },
       "allowedValues": [
         "ase",
@@ -94,7 +94,7 @@
     "storageAccountOperation": {
       "type": "string",
       "metadata": {
-        "description": "The name of operation that the function app performs. eg) common, sales, etc..."
+        "description": "The name of operation that the resource performs. eg) common, sales, etc..."
       },
       "defaultValue": ""
     },
@@ -123,7 +123,7 @@
     "cosmosDbOperation": {
       "type": "string",
       "metadata": {
-        "description": "The name of operation that the function app performs. eg) common, sales, etc..."
+        "description": "The name of operation that the resource performs. eg) common, sales, etc..."
       },
       "defaultValue": ""
     },
@@ -178,16 +178,159 @@
         "description": "Datacentre locations based on the failover priority"
       },
       "defaultValue": "Australia East"
+    },
+
+    "appInsightsLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "The region where the resource is hosted."
+      },
+      "allowedValues": [
+        "southcentralus"
+      ],
+      "defaultValue": "southcentralus"
+    },
+    "appInsightsLocationCode": {
+      "type": "string",
+      "metadata": {
+        "description": "The Azure region that the resource is deployed to."
+      },
+      "allowedValues": [
+        "usc"
+      ],
+      "defaultValue": "usc"
+    },
+    "appInsightsResourceTypeSuffix": {
+      "type": "string",
+      "metadata": {
+        "description": "The suffix of resource type to identify multiple resources in case same resource type exists. eg) 01, 02, etc..."
+      },
+      "defaultValue": ""
+    },
+    "appInsightsOperation": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of operation that the resource performs. eg) common, sales, etc..."
+      },
+      "defaultValue": ""
+    },
+    "appInsightsKind": {
+      "type": "string",
+      "metadata": {
+        "description": "The type of Application Insights instance."
+      },
+      "allowedValues": [
+        "other",
+        "web"
+      ],
+      "defaultValue": "web"
+    },
+
+    "appServicePlanResourceTypeSuffix": {
+      "type": "string",
+      "metadata": {
+        "description": "The suffix of resource type to identify multiple resources in case same resource type exists. eg) 01, 02, etc..."
+      },
+      "defaultValue": ""
+    },
+    "appServicePlanOperation": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of operation that the resource performs. eg) common, sales, etc..."
+      },
+      "defaultValue": ""
+    },
+    "appServicePlanSkuName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of SKU for App Service Plan."
+      },
+      "defaultValue": "S1"
+    },
+    "appServicePlanSkuTier": {
+      "type": "string",
+      "metadata": {
+        "description": "The tier of SKU for App Service Plan."
+      },
+      "defaultValue": "Standard"
+    },
+    "appServicePlanSkuSize": {
+      "type": "string",
+      "metadata": {
+        "description": "The size of SKU for App Service Plan."
+      },
+      "defaultValue": "S1"
+    },
+    "appServicePlanSkuFamily": {
+      "type": "string",
+      "metadata": {
+        "description": "The family of SKU for App Service Plan."
+      },
+      "defaultValue": "S"
+    },
+    "appServicePlanSkuCapacity": {
+      "type": "int",
+      "metadata": {
+        "description": "The capacity of SKU for App Service Plan."
+      },
+      "defaultValue": 1
+    },
+
+    "webAppResourceTypeSuffix": {
+      "type": "string",
+      "metadata": {
+        "description": "The suffix of resource type to identify multiple resources in case same resource type exists. eg) 01, 02, etc..."
+      },
+      "defaultValue": ""
+    },
+    "webAppOperation": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of operation that the resource performs. eg) common, sales, etc..."
+      },
+      "defaultValue": ""
+    },
+    "webAppRemoteDebuggingEnabled": {
+      "type": "bool",
+      "metadata": {
+        "description": "The value indicating whether to enable remote debugging or not."
+      },
+      "defaultValue": false
+    },
+    "webAppRemoteDebuggingVersion": {
+      "type": "string",
+      "metadata": {
+        "description": "The Visual Studio version of remote deubgging"
+      },
+      "allowedValues": [
+        "VS2012",
+        "VS2013",
+        "VS2015",
+        "VS2017"
+      ],
+      "defaultValue": "VS2017"
+    },
+    "webAppUse32bitWorkerProcess": {
+      "type": "bool",
+      "metadata": {
+        "description": "The value indicating whether to use 32bit worker process or not."
+      },
+      "defaultValue": true
     }
   },
   "variables": {
+    "resourceNameLongTemplate": "[toLower(concat('{0}', '-', parameters('organisationCode'), '-', parameters('environmentCode'), '-', parameters('locationCode'), '-', '{1}'))]",
+    "resourceNameShortTemplate": "[replace(variables('resourceNameLongTemplate'), '-', '')]",
     "deployments": {
       "apiVersion": "[providers('Microsoft.Resources', 'deployments').apiVersions[0]]",
       "templateLink": {
         "uri": "https://raw.githubusercontent.com/TeamKDA/KorDevAus/master/src/Resources/{0}.json"
       },
       "storageAccount": "[concat('storageaccount-', guid(resourceGroup().id, deployment().name))]",
-      "cosmosDb": "[concat('cosmosdb-', guid(resourceGroup().id, deployment().name))]"
+      "cosmosDb": "[concat('cosmosdb-', guid(resourceGroup().id, deployment().name))]",
+      "appInsights": "[concat('appinsights-', guid(resourceGroup().id, deployment().name))]",
+      "appServicePlan": "[concat('appserviceplan-', guid(resourceGroup().id, deployment().name))]",
+      "webApp": "[concat('webapp-', guid(resourceGroup().id, deployment().name))]"
     },
     "common": {
       "organisation": "[parameters('organisation')]",
@@ -207,8 +350,8 @@
       }
     },
     "cosmosDb": {
-      "resourceTypeSuffix": "[parameters('storageAccountResourceTypeSuffix')]",
-      "operation": "[parameters('storageAccountOperation')]",
+      "resourceTypeSuffix": "[parameters('cosmosDbResourceTypeSuffix')]",
+      "operation": "[parameters('cosmosDbOperation')]",
       "offerType": "[parameters('cosmosDbOfferType')]",
       "consistencyLevel": "[parameters('cosmosDbConsistencyLevel')]",
       "maxStalenessPrefix": "[parameters('cosmosDbMaxStalenessPrefix')]",
@@ -223,6 +366,33 @@
           "failoverPriority": 1
         }
       ]
+    },
+    "appInsights": {
+      "resourceId": "[resourceId('Microsoft.Insights/components', replace(replace(variables('resourceNameLongTemplate'), '{0}', concat('appins', parameters('appInsightsResourceTypeSuffix'))), '{1}', parameters('appInsightsOperation')))]",
+      "apiVersion": "[providers('Microsoft.Insights', 'components').apiVersions[0]]",
+      "location": "[parameters('appInsightsLocation')]",
+      "locationCode": "[parameters('appInsightsLocationCode')]",
+      "resourceTypeSuffix": "[parameters('appInsightsResourceTypeSuffix')]",
+      "operation": "[parameters('appInsightsOperation')]",
+      "kind": "[parameters('appInsightsKind')]"
+    },
+    "appServicePlan": {
+      "resourceTypeSuffix": "[parameters('appServicePlanResourceTypeSuffix')]",
+      "operation": "[parameters('appServicePlanOperation')]",
+      "sku": {
+        "name": "[parameters('appServicePlanSkuName')]",
+        "tier": "[parameters('appServicePlanSkuTier')]",
+        "size": "[parameters('appServicePlanSkuSize')]",
+        "family": "[parameters('appServicePlanSkuFamily')]",
+        "capacity": "[parameters('appServicePlanSkuCapacity')]"
+      }
+    },
+    "webApp": {
+      "resourceTypeSuffix": "[parameters('webAppResourceTypeSuffix')]",
+      "operation": "[parameters('webAppOperation')]",
+      "remoteDebuggingEnabled": "[parameters('webAppRemoteDebuggingEnabled')]",
+      "remoteDebuggingVersion": "[parameters('webAppRemoteDebuggingVersion')]",
+      "use32bitWorkerProcess": "[parameters('webAppUse32bitWorkerProcess')]"
     }
   },
   "resources": [
@@ -325,6 +495,106 @@
           },
           "failOverLocations": {
             "value": "[variables('cosmosDb').failOverLocations]"
+          }
+        }
+      }
+    },
+    {
+      "comments": "### RESOURCE - APPLICATION INSIGHTS ###",
+      "apiVersion": "[variables('deployments').apiVersion]",
+      "type": "Microsoft.Resources/deployments",
+      "name": "[variables('deployments').appInsights]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[replace(variables('deployments').templateLink.uri, '{0}', 'ApplicationInsights')]"
+        },
+        "parameters": {
+          "organisation": {
+            "value": "[variables('common').organisation]"
+          },
+          "organisationCode": {
+            "value": "[variables('common').organisationCode]"
+          },
+          "environment": {
+            "value": "[variables('common').environment]"
+          },
+          "environmentCode": {
+            "value": "[variables('common').environmentCode]"
+          },
+          "location": {
+            "value": "[variables('appInsights').location]"
+          },
+          "locationCode": {
+            "value": "[variables('appInsights').locationCode]"
+          },
+          "resourceTypeSuffix": {
+            "value": "[variables('appInsights').resourceTypeSuffix]"
+          },
+          "operation": {
+            "value": "[variables('appInsights').operation]"
+          },
+          "projectName": {
+            "value": "[variables('common').projectName]"
+          },
+          "appInsightsKind": {
+            "value": "[variables('appInsights').kind]"
+          }
+        }
+      }
+    },
+    {
+      "comments": "### RESOURCE - APP SERVICE PLAN ###",
+      "apiVersion": "[variables('deployments').apiVersion]",
+      "type": "Microsoft.Resources/deployments",
+      "name": "[variables('deployments').appServicePlan]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[replace(variables('deployments').templateLink.uri, '{0}', 'AppServicePlan')]"
+        },
+        "parameters": {
+          "organisation": {
+            "value": "[variables('common').organisation]"
+          },
+          "organisationCode": {
+            "value": "[variables('common').organisationCode]"
+          },
+          "environment": {
+            "value": "[variables('common').environment]"
+          },
+          "environmentCode": {
+            "value": "[variables('common').environmentCode]"
+          },
+          "location": {
+            "value": "[variables('common').location]"
+          },
+          "locationCode": {
+            "value": "[variables('common').locationCode]"
+          },
+          "resourceTypeSuffix": {
+            "value": "[variables('appServicePlan').resourceTypeSuffix]"
+          },
+          "operation": {
+            "value": "[variables('appServicePlan').operation]"
+          },
+          "projectName": {
+            "value": "[variables('common').projectName]"
+          },
+          "skuName": {
+            "value": "[variables('appServicePlan').sku.name]"
+          },
+          "skuTier": {
+            "value": "[variables('appServicePlan').sku.tier]"
+          },
+          "skuSize": {
+            "value": "[variables('appServicePlan').sku.size]"
+          },
+          "skuFamily": {
+            "value": "[variables('appServicePlan').sku.family]"
+          },
+          "skuCapacity": {
+            "value": "[variables('appServicePlan').sku.capacity]"
           }
         }
       }
