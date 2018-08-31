@@ -598,6 +598,60 @@
           }
         }
       }
+    },
+    {
+      "comments": "### RESOURCE - WEB APP ###",
+      "apiVersion": "[variables('deployments').apiVersion]",
+      "type": "Microsoft.Resources/deployments",
+      "name": "[variables('deployments').webApp]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[replace(variables('deployments').templateLink.uri, '{0}', 'WebApp')]"
+        },
+        "parameters": {
+          "organisation": {
+            "value": "[variables('common').organisation]"
+          },
+          "organisationCode": {
+            "value": "[variables('common').organisationCode]"
+          },
+          "environment": {
+            "value": "[variables('common').environment]"
+          },
+          "environmentCode": {
+            "value": "[variables('common').environmentCode]"
+          },
+          "location": {
+            "value": "[variables('common').location]"
+          },
+          "locationCode": {
+            "value": "[variables('common').locationCode]"
+          },
+          "resourceTypeSuffix": {
+            "value": "[variables('webApp').resourceTypeSuffix]"
+          },
+          "operation": {
+            "value": "[variables('webApp').operation]"
+          },
+          "appInsightsInstrumentationKey": {
+            "value": "[reference(variables('appInsights').resourceId, variables('appInsights').apiVersion).instrumentationKey]"
+          },
+          "remoteDebuggingEnabled": {
+            "value": "[variables('webApp').remoteDebuggingEnabled]"
+          },
+          "remoteDebuggingVersion": {
+            "value": "[variables('webApp').remoteDebuggingVersion]"
+          },
+          "use32bitWorkerProcess": {
+            "value": "[variables('webApp').use32bitWorkerProcess]"
+          }
+        }
+      },
+      "dependsOn": [
+        "[variables('deployments').appInsights]",
+        "[variables('deployments').appServicePlan]"
+      ]
     }
   ],
   "outputs": {}
