@@ -24,12 +24,19 @@
   <!-- vertag<:>end -->
   <ItemGroup>
     <None Include="ApplicationInsights.json" />
+    <None Include="ApplicationResourcesDeployment.json" />
     <None Include="AppServicePlan.json" />
     <None Include="CosmosDb.json" />
+    <None Include="Create-ServicePrincipal.ps1" />
     <None Include="Deployment.targets">
       <Visible>False</Visible>
     </None>
+    <None Include="KeyVault.json" />
+    <None Include="Oms.json" />
+    <None Include="Set-DiagnosticSettings.ps1" />
+    <None Include="SharedResourcesDeployment.json" />
     <None Include="StorageAccounts.json" />
+    <None Include="Update-AppSettings.ps1" />
     <None Include="WebApp.json" />
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
