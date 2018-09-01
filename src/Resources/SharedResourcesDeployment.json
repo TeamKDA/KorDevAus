@@ -84,6 +84,31 @@
       "defaultValue": "NOT_SET"
     },
 
+    "omsLogResourceTypeSuffix": {
+      "type": "string",
+      "metadata": {
+        "description": "The suffix of resource type to identify multiple resources in case same resource type exists. eg) 01, 02, etc..."
+      },
+      "defaultValue": ""
+    },
+    "omsLogOperation": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of operation that the resource performs. eg) common, sales, etc..."
+      },
+      "defaultValue": ""
+    },
+    "omsLogWorkspaceSkuName": {
+      "type": "string",
+      "metadata": {
+        "description": "The SKU name of OMS Log Analytics Workspace"
+      },
+      "allowedValues": [
+        "pergb2018"
+      ],
+      "defaultValue": "pergb2018"
+    },
+
     "storageAccountResourceTypeSuffix": {
       "type": "string",
       "metadata": {
@@ -111,31 +136,6 @@
         "description": "SKU Tier for the Storage Account"
       },
       "defaultValue": "Standard"
-    },
-
-    "omsLogResourceTypeSuffix": {
-      "type": "string",
-      "metadata": {
-        "description": "The suffix of resource type to identify multiple resources in case same resource type exists. eg) 01, 02, etc..."
-      },
-      "defaultValue": ""
-    },
-    "omsLogOperation": {
-      "type": "string",
-      "metadata": {
-        "description": "The name of operation that the resource performs. eg) common, sales, etc..."
-      },
-      "defaultValue": ""
-    },
-    "omsLogWorkspaceSkuName": {
-      "type": "string",
-      "metadata": {
-        "description": "The SKU name of OMS Log Analytics Workspace"
-      },
-      "allowedValues": [
-        "pergb2018"
-      ],
-      "defaultValue": "pergb2018"
     }
   },
   "variables": {
