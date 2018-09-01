@@ -554,10 +554,10 @@
           "keyVaultSkuFamily": {
             "value": "[variables('keyVault').sku.family]"
           },
-          "enableVaultForDeployment": {
+          "enabledVaultForDeployment": {
             "value": "[variables('keyVault').enabledForDeployment]"
           },
-          "enableVaultForDiskEncryption": {
+          "enabledVaultForDiskEncryption": {
             "value": "[variables('keyVault').enabledForDiskEncryption]"
           },
           "enabledForTemplateDeployment": {
