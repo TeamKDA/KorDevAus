@@ -158,14 +158,6 @@
       "locationCode": "[parameters('locationCode')]",
       "projectName": "[parameters('projectName')]"
     },
-    "storageAccount": {
-      "resourceTypeSuffix": "[parameters('storageAccountResourceTypeSuffix')]",
-      "operation": "[parameters('storageAccountOperation')]",
-      "sku": {
-        "name": "[parameters('storageAccountSkuName')]",
-        "tier": "[parameters('storageAccountSkuTier')]"
-      }
-    },
     "omsLog": {
       "resourceTypeSuffix": "[parameters('omsLogResourceTypeSuffix')]",
       "operation": "[parameters('omsLogOperation')]",
@@ -174,6 +166,14 @@
           "name": "[parameters('omsLogWorkspaceSkuName')]"
         }
       }
+    },
+    "storageAccount": {
+      "resourceTypeSuffix": "[parameters('storageAccountResourceTypeSuffix')]",
+      "operation": "[parameters('storageAccountOperation')]",
+      "sku": {
+        "name": "[parameters('storageAccountSkuName')]",
+        "tier": "[parameters('storageAccountSkuTier')]"
+      }
     }
   },
   "resources": [
@@ -181,7 +181,7 @@
       "comments": "### RESOURCE - OMS LOG ANALYTCS ###",
       "apiVersion": "[variables('deployments').apiVersion]",
       "type": "Microsoft.Resources/deployments",
-      "name": "[variables('deployments').storageAccount]",
+      "name": "[variables('deployments').omsLog]",
       "properties": {
         "mode": "Incremental",
         "templateLink": {
