@@ -202,15 +202,6 @@
         }
       }
     },
-    "workspace": {
-      "name": "[replace(variables('resourceNameLongTemplate'), '{0}', concat('omslog', parameters('resourceTypeSuffix')))]",
-      "resourceGroup": "[replace(variables('resourceNameLongTemplate'), '{0}', 'resgrp')]"
-    },
-    "diagnostics": {
-      "apiVersion": "[providers('Microsoft.Insights', 'diagnosticSettings').apiVersions[0]]",
-      "location": "[parameters('location')]",
-      "workspaceId": "[resourceId(variables('workspace').resourceGroup, 'Microsoft.OperationalInsights/workspaces/', variables('workspace').name)]"
-    },
     "tags": {
       "organisation": "[parameters('organisation')]",
       "environment": "[parameters('environment')]",
@@ -249,29 +240,6 @@
             "permissions": {
               "keys": "[variables('keyVault').accessPolicies.permissions.keys]",
               "secrets": "[variables('keyVault').accessPolicies.permissions.secrets]"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "comments": " = = = Diagnostic Settings for Key Vault = = = ",
-      "apiVersion": "[variables('diagnostics').apiVersion]",
-      "type": "Microsoft.KeyVault/vaults/providers/diagnosticSettings",
-      "name": "[concat(variables('keyVault').name, '/Microsoft.Insights/service')]",
-      "location": "[variables('diagnostics').location]",
-      "dependsOn": [
-        "[variables('keyVault').name]"
-      ],
-      "properties": {
-        "workspaceId": "[variables('diagnostics').workspaceId]",
-        "logs": [
-          {
-            "category": "AuditEvent",
-            "enabled": true,
-            "retentionPolicy": {
-              "enabled": true,
-              "days": 30
             }
           }
         ]
