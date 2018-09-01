@@ -1,8 +1,31 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
-  "parameters": {},
-  "variables": {},
+  "parameters": {
+    "providerNamespace": {
+      "type": "string",
+      "metadata": {
+        "description": "Provider namespace"
+      }
+    },
+    "resourceType": {
+      "type": "string",
+      "metadata": {
+        "description": "Resource type"
+      }
+    }
+  },
+  "variables": {
+    "provider": {
+      "namespace": "[parameters('providerNamespace')]",
+      "resourceType": "[parameters('resourceType')]"
+    }
+  },
   "resources": [],
-  "outputs": {}
+  "outputs": {
+    "providers": {
+      "type": "object",
+      "value": "[providers(variables('provider').namespace, variables('provider').resourceType)]"
+    }
+  }
 }

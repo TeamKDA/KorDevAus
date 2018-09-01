@@ -1,0 +1,251 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "organisation": {
+      "type": "string",
+      "metadata": {
+        "description": "The organisation that the resource group or resource is owned by. Descriptive, used for metadata."
+      },
+      "allowedValues": [
+        "Team KDA"
+      ],
+      "defaultValue": "Team KDA"
+    },
+    "organisationCode": {
+      "type": "string",
+      "metadata": {
+        "description": "The organisation that the resource group or resource is owned by. Short, used for resource naming."
+      },
+      "allowedValues": [
+        "kda"
+      ],
+      "defaultValue": "kda"
+    },
+    "environment": {
+      "type": "string",
+      "metadata": {
+        "description": "Whether this resource is Dev/Test/Prod/etc."
+      },
+      "allowedValues": [
+        "LOCAL",
+        "DEVELOPMENT",
+        "TEST",
+        "PRODUCTION",
+        "ALL"
+      ],
+      "defaultValue": "DEVELOPMENT"
+    },
+    "environmentCode": {
+      "type": "string",
+      "metadata": {
+        "description": "Whether this resource is Dev/Test/Prod/etc."
+      },
+      "allowedValues": [
+        "lcl",
+        "dev",
+        "tst",
+        "prd",
+        "all"
+      ],
+      "defaultValue": "dev"
+    },
+    "location": {
+      "type": "string",
+      "metadata": {
+        "description": "The region where Application Insights instance is hosted."
+      },
+      "allowedValues": [
+        "australiasoutheast",
+        "australiaeast",
+        "southcentralus",
+        "[resourceGroup().location]"
+      ],
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "locationCode": {
+      "type": "string",
+      "metadata": {
+        "description": "The Azure region that the resource is deployed to."
+      },
+      "allowedValues": [
+        "ase",
+        "aue",
+        "usc"
+      ],
+      "defaultValue": "ase"
+    },
+    "resourceTypeSuffix": {
+      "type": "string",
+      "metadata": {
+        "description": "The suffix of resource type to identify multiple resources in case same resource type exists. eg) 01, 02, etc..."
+      },
+      "defaultValue": ""
+    },
+    "operation": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of operation that the resource performs. eg) common, sales, etc..."
+      },
+      "defaultValue": ""
+    },
+
+    "projectName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the project the resource group or resource was provisioned for."
+      },
+      "defaultValue": "NOT_SET"
+    },
+
+    "omsWorkspaceSkuName": {
+      "type": "string",
+      "metadata": {
+        "description": "SKU Name for the OMS Log Analytics Workspace"
+      },
+      "allowedValues": [
+        "pergb2018"
+      ],
+      "defaultValue": "pergb2018"
+    }
+  },
+  "variables": {
+    "resourceNameLongTemplate": "[toLower(concat('{0}', '-', parameters('organisationCode'), '-', parameters('environmentCode'), '-', parameters('locationCode')))]",
+    "resourceNameShortTemplate": "[replace(variables('resourceNameLongTemplate'), '-', '')]",
+    "omsWorkspace": {
+      "name": "[replace(variables('resourceNameLongTemplate'), '{0}', concat('omslog', parameters('resourceTypeSuffix')))]",
+      "apiVersion": "[providers('Microsoft.OperationalInsights', 'workspaces').apiVersions[0]]",
+      "location": "[parameters('location')]",
+      "resourceId": "[resourceId('Microsoft.OperationalInsights/workspaces/', replace(variables('resourceNameLongTemplate'), '{0}', concat('omslog', parameters('resourceTypeSuffix'))))]",
+      "sku": {
+        "name": "[parameters('omsWorkspaceSkuName')]"
+      }
+    },
+    "omsSolutions": {
+      "apiVersion": "[providers('Microsoft.OperationsManagement', 'solutions').apiVersions[0]]",
+      "location": "[parameters('location')]",
+      "keyVaultAnalytics": {
+        "product": "KeyVaultAnalytics",
+        "name": "[concat('KeyVaultAnalytics', '(', variables('omsWorkspace').name, ')')]"
+      },
+      "applicationInsights": {
+        "product": "ApplicationInsights",
+        "name": "[concat('ApplicationInsights', '(', variables('omsWorkspace').name, ')')]"
+      },
+      "azureWebAppsAnalytics": {
+        "product": "AzureWebAppsAnalytics",
+        "name": "[concat('AzureWebAppsAnalytics', '(', variables('omsWorkspace').name, ')')]"
+      },
+      "logicAppsManagement": {
+        "product": "LogicAppsManagement",
+        "name": "[concat('LogicAppsManagement', '(', variables('omsWorkspace').name, ')')]"
+      }
+    },
+    "tags": {
+      "organisation": "[parameters('organisation')]",
+      "environment": "[parameters('environment')]",
+      "projectName": "[parameters('projectName')]"
+    }
+  },
+  "resources": [
+    {
+      "comments": " = = = OMS Log Analytics Workspace = = = ",
+      "apiVersion": "[variables('omsWorkspace').apiVersion]",
+      "type": "Microsoft.OperationalInsights/workspaces",
+      "name": "[variables('omsWorkspace').name]",
+      "location": "[variables('omsWorkspace').location]",
+      "tags": "[variables('tags')]",
+      "properties": {
+        "sku": {
+          "name": "[variables('omsWorkspace').sku.name]"
+        }
+      }
+    },
+    {
+      "comments": " = = = OMS Solution: Key Vault Analytics = = = ",
+      "apiVersion": "[variables('omsSolutions').apiVersion]",
+      "type": "Microsoft.OperationsManagement/solutions",
+      "name": "[variables('omsSolutions').keyVaultAnalytics.name]",
+      "location": "[variables('omsSolutions').location]",
+      "dependsOn": [
+        "[variables('omsWorkspace').name]"
+      ],
+      "plan": {
+        "name": "[variables('omsSolutions').keyVaultAnalytics.name]",
+        "product": "[concat('OMSGallery/', variables('omsSolutions').keyVaultAnalytics.product)]",
+        "publisher": "Microsoft",
+        "promotionCode": ""
+      },
+      "properties": {
+        "workspaceResourceId": "[variables('omsWorkspace').resourceId]"
+      }
+    },
+    {
+      "comments": " = = = OMS Solution: Application Insights = = = ",
+      "apiVersion": "[variables('omsSolutions').apiVersion]",
+      "type": "Microsoft.OperationsManagement/solutions",
+      "name": "[variables('omsSolutions').applicationInsights.name]",
+      "location": "[variables('omsSolutions').location]",
+      "dependsOn": [
+        "[variables('omsWorkspace').name]"
+      ],
+      "plan": {
+        "name": "[variables('omsSolutions').applicationInsights.name]",
+        "product": "[concat('OMSGallery/', variables('omsSolutions').applicationInsights.product)]",
+        "publisher": "Microsoft",
+        "promotionCode": ""
+      },
+      "properties": {
+        "workspaceResourceId": "[variables('omsWorkspace').resourceId]"
+      }
+    },
+    {
+      "comments": " = = = OMS Solution: Azure Web App Analytics = = = ",
+      "apiVersion": "[variables('omsSolutions').apiVersion]",
+      "type": "Microsoft.OperationsManagement/solutions",
+      "name": "[variables('omsSolutions').azureWebAppsAnalytics.name]",
+      "location": "[variables('omsSolutions').location]",
+      "dependsOn": [
+        "[variables('omsWorkspace').name]"
+      ],
+      "plan": {
+        "name": "[variables('omsSolutions').azureWebAppsAnalytics.name]",
+        "product": "[concat('OMSGallery/', variables('omsSolutions').azureWebAppsAnalytics.product)]",
+        "publisher": "Microsoft",
+        "promotionCode": ""
+      },
+      "properties": {
+        "workspaceResourceId": "[variables('omsWorkspace').resourceId]"
+      }
+    },
+    {
+      "comments": " = = = OMS Solution: Logic App Management = = = ",
+      "apiVersion": "[variables('omsSolutions').apiVersion]",
+      "type": "Microsoft.OperationsManagement/solutions",
+      "name": "[variables('omsSolutions').logicAppsManagement.name]",
+      "location": "[variables('omsSolutions').location]",
+      "dependsOn": [
+        "[variables('omsWorkspace').name]"
+      ],
+      "plan": {
+        "name": "[variables('omsSolutions').logicAppsManagement.name]",
+        "product": "[concat('OMSGallery/', variables('omsSolutions').logicAppsManagement.product)]",
+        "publisher": "Microsoft",
+        "promotionCode": ""
+      },
+      "properties": {
+        "workspaceResourceId": "[variables('omsWorkspace').resourceId]"
+      }
+    }
+  ],
+  "outputs": {
+    "workspaceName": {
+      "type": "string",
+      "value": "[variables('omsWorkspace').name]"
+    },
+    "workspaceResourceGroup": {
+      "type": "string",
+      "value": "[resourcegroup().name]"
+    }
+  }
+}

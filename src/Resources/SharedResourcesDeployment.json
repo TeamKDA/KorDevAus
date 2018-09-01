@@ -111,6 +111,31 @@
         "description": "SKU Tier for the Storage Account"
       },
       "defaultValue": "Standard"
+    },
+
+    "omsLogResourceTypeSuffix": {
+      "type": "string",
+      "metadata": {
+        "description": "The suffix of resource type to identify multiple resources in case same resource type exists. eg) 01, 02, etc..."
+      },
+      "defaultValue": ""
+    },
+    "omsLogOperation": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of operation that the resource performs. eg) common, sales, etc..."
+      },
+      "defaultValue": ""
+    },
+    "omsLogWorkspaceSkuName": {
+      "type": "string",
+      "metadata": {
+        "description": "The SKU name of OMS Log Analytics Workspace"
+      },
+      "allowedValues": [
+        "pergb2018"
+      ],
+      "defaultValue": "pergb2018"
     }
   },
   "variables": {
@@ -121,7 +146,8 @@
       "templateLink": {
         "uri": "https://raw.githubusercontent.com/TeamKDA/KorDevAus/master/src/Resources/{0}.json"
       },
-      "storageAccount": "[concat('storageaccount-', guid(resourceGroup().id, deployment().name))]"
+      "storageAccount": "[concat('storageaccount-', guid(resourceGroup().id, deployment().name))]",
+      "omsLog": "[concat('omsloganalytics-', guid(resourceGroup().id, deployment().name))]"
     },
     "common": {
       "organisation": "[parameters('organisation')]",
@@ -139,14 +165,70 @@
         "name": "[parameters('storageAccountSkuName')]",
         "tier": "[parameters('storageAccountSkuTier')]"
       }
+    },
+    "omsLog": {
+      "resourceTypeSuffix": "[parameters('omsLogResourceTypeSuffix')]",
+      "operation": "[parameters('omsLogOperation')]",
+      "workspace": {
+        "sku": {
+          "name": "[parameters('omsLogWorkspaceSkuName')]"
+        }
+      }
     }
   },
   "resources": [
+    {
+      "comments": "### RESOURCE - OMS LOG ANALYTCS ###",
+      "apiVersion": "[variables('deployments').apiVersion]",
+      "type": "Microsoft.Resources/deployments",
+      "name": "[variables('deployments').storageAccount]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[replace(variables('deployments').templateLink.uri, '{0}', 'Oms')]"
+        },
+        "parameters": {
+          "organisation": {
+            "value": "[variables('common').organisation]"
+          },
+          "organisationCode": {
+            "value": "[variables('common').organisationCode]"
+          },
+          "environment": {
+            "value": "[variables('common').environment]"
+          },
+          "environmentCode": {
+            "value": "[variables('common').environmentCode]"
+          },
+          "location": {
+            "value": "[variables('common').location]"
+          },
+          "locationCode": {
+            "value": "[variables('common').locationCode]"
+          },
+          "resourceTypeSuffix": {
+            "value": "[variables('omsLog').resourceTypeSuffix]"
+          },
+          "operation": {
+            "value": "[variables('omsLog').operation]"
+          },
+          "projectName": {
+            "value": "[variables('common').projectName]"
+          },
+          "omsWorkspaceSkuName": {
+            "value": "[variables('omsLog').workspace.sku.name]"
+          }
+        }
+      }
+    },
     {
       "comments": "### RESOURCE - STORAGE ACCOUNT ###",
       "apiVersion": "[variables('deployments').apiVersion]",
       "type": "Microsoft.Resources/deployments",
       "name": "[variables('deployments').storageAccount]",
+      "dependsOn": [
+        "[variables('deployments').omsLog]"
+      ],
       "properties": {
         "mode": "Incremental",
         "templateLink": {
