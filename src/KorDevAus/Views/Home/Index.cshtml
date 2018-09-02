@@ -1,28 +1,15 @@
 ﻿<div class="home-index">
 
     <div class="home-index__descrption">
-        <h1 class="home-index__title">이곳은 멜번에 거주하는 한인 소프트웨어 개발자들의 공간입니다</h1>
+        <h1 class="home-index__title">이곳은 호주에 거주하는 한인 소프트웨어 개발자들의 공간입니다</h1>
         <div class="action-buttons">
             <a asp-controller="Home" asp-action="About" class="btn btn-join">자세히 보기</a>
         </div>
     </div>
 
-    <pre>
-import <span class="keyword">Join</span> from './JoinHOC'
-import <span class="keyword">KoreanDevlelopersMelbourne</span> from './KorDevMelbourne'
+    <partial name="_CodeSnippet" />
 
-const <span class="keyword">Welcome</span> = ({ 
-    inMelbourne, 
-    areYouDev, 
-    speakKorean 
-}) => <span class="name">inMelbourne</span> && 
-        <span class="name">areYouDev</span> && 
-      <span class="name">speakKorean</span> && 
-    <span class="keyword">&lt;KoreanDevlelopersMelbourne /&gt;</span>
-
-
-return <span class="keyword"><a class="join" href="/join">Join(<span class="name">Welcome</span>)</a></span>
-    </pre>
+    
 </div>
 
 @section scripts {
