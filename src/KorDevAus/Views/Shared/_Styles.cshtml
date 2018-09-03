@@ -1,12 +1,10 @@
 <environment include="Development">
-    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
-    <link rel="stylesheet" href="~/lib/animate.css/animate.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/header.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/home-index.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/home-about.css" asp-append-version="true" />
+    @foreach(string path in AssetFiles.CssFiles) 
+    {
+        <link rel="stylesheet" href="@path" inline />    
+    }
 </environment>
 
 <environment exclude="Development">
-    <link rel="stylesheet" href="~/css/bundle.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="@AssetFiles.CssBundleFilePath" inline />
 </environment>

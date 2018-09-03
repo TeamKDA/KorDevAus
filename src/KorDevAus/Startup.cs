@@ -16,12 +16,14 @@ namespace KorDevAus
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment Environment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -37,6 +39,23 @@ namespace KorDevAus
                 .AddAzureADB2C(options => Configuration.Bind("AzureAdB2C", options));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            /* Asset compilation */
+            if (Environment.IsDevelopment()) 
+            {
+                services.AddWebOptimizer(pipeline => 
+                {
+                    pipeline.CompileScssFiles();
+                });
+            }
+            else
+            {
+                services.AddWebOptimizer(pipeline => 
+                {
+                    pipeline.AddScssBundle(AssetFiles.CssBundleFilePath, AssetFiles.CssFiles.ToArray());
+                });
+            }
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +72,7 @@ namespace KorDevAus
             }
 
             app.UseHttpsRedirection();
+            app.UseWebOptimizer();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
