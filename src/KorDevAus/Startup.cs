@@ -46,7 +46,6 @@ namespace KorDevAus
             {
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
-                app.UseRewriter(new RewriteOptions().AddIISUrlRewrite(env.ContentRootFileProvider, "rewrite.xml"));
             }
 
             app.UseHttpsRedirection();
