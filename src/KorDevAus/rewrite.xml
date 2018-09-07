@@ -1,0 +1,11 @@
+﻿<rewrite>
+  <rules>
+    <rule name=".com to .org redirect" stopProcessing="true">
+      <match url="(.*)" />
+      <conditions>
+        <add input="{HTTP_HOST}" pattern="^koreandevelopersaustralia\.org$" negate="true" />
+      </conditions>
+      <action type="Redirect" url="https://koreandevelopersaustralia.org/{R:1}" appendQueryString="true" redirectType="Permanent" />
+    </rule>
+  </rules>
+</rewrite>
