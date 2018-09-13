@@ -1,10 +1,12 @@
 <environment include="Development">
-    <script src="~/lib/stimulus/dist/stimulus.umd.js"></script>
-    <script src="~/lib/jquery/jquery.js"></script>
-    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="/lib/turbolinks/turbolinks.js"></script>
+    <script src="lib/stimulus/dist/stimulus.umd.js"></script>
+    <script src="lib/jquery/jquery.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.js"></script>
+    <script src="js/site.ts" inline></script>
 </environment>
 
 <environment exclude="Development">
-    <script src="~/js/bundle.min.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="/js/vendor.min.js"></script>
+    <!-- <script type="text/javascript" src="/js/bundle.min.js"></script> -->
 </environment>

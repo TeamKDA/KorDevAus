@@ -46,13 +46,26 @@ namespace KorDevAus
                 services.AddWebOptimizer(pipeline => 
                 {
                     pipeline.CompileScssFiles();
+                    pipeline.CompileTypeScriptFiles();
                 });
             }
             else
             {
                 services.AddWebOptimizer(pipeline => 
                 {
-                    pipeline.AddScssBundle(AssetFiles.CssBundleFilePath, AssetFiles.CssFiles.ToArray());
+                    pipeline.AddScssBundle(
+                        AssetFiles.CssBundleFilePath, 
+                        AssetFiles.CssFiles.ToArray()
+                    );
+
+                    pipeline.AddJavaScriptBundle(
+                        "/js/vendor.min.js", 
+                        "lib/turbolinks/turbolinks.js",
+                        "lib/stimulus/dist/stimulus.umd.js",
+                        "lib/jquery/jquery.js",
+                        "lib/bootstrap/js/bootstrap.js", 
+                        "js/user.js");
+                    // pipeline.AddTypeScriptBundle("/js/bundle.min.js", "js/site.ts");
                 });
             }
             

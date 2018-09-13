@@ -113,4 +113,5 @@ src/KorDevAus/appsettings\.Development\.json
 
 src/KorDevAus/wwwroot/css/bundle\.min\.css
 
+src/KorDevAus/wwwroot/js/vendor\.min\.js
 src/KorDevAus/wwwroot/js/bundle\.min\.js

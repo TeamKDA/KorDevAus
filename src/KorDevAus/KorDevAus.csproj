@@ -7,9 +7,12 @@
 
   <ItemGroup>
     <PackageReference Include="LigerShark.WebOptimizer.Core" Version="1.0.215" />
+    <PackageReference Include="LigerShark.WebOptimizer.NodeServices" Version="1.0.5-beta" />
     <PackageReference Include="LigerShark.WebOptimizer.Sass" Version="1.0.34-beta" />
+    <PackageReference Include="LigerShark.WebOptimizer.TypeScript" Version="2.5.10-beta" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureADB2C.UI" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.NodeServices" Version="2.2.0-preview1-35029" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" PrivateAssets="All" />
   </ItemGroup>
 

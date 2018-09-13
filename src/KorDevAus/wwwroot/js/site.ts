@@ -2,3 +2,11 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+// import sayHello from './user'
+
+const showAlert = () => {
+    console.log('Jay Kwon')
+}
+
+showAlert()
