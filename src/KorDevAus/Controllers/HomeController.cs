@@ -16,6 +16,12 @@ namespace KorDevAus.Controllers
             return View();
         }
 
+        [Route("welcome")]
+        public IActionResult Welcome()
+        {
+            return View();
+        }
+
         [Route("about-us")]
         public IActionResult About()
         {
