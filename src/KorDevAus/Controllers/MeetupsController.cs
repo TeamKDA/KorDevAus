@@ -15,5 +15,11 @@ namespace KorDevAus.Controllers
         {
             return View();
         }
+
+        [Route("meetups/2018-10-15")]
+        public IActionResult Details20181015()
+        {
+            return View();
+        }
     }
 }
