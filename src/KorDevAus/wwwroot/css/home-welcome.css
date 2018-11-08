@@ -1,5 +1,5 @@
 .home-welcome__description-title {
-	margin: 20px 0;
+	margin: 40px 0 0 0;
 }
 
 .home-welcome__description-title-main {
@@ -7,6 +7,11 @@
 	line-height: 1.3;
 	word-break: keep-all;
 	font-size: 20px;
+}
+
+.home-welcome__description-text {
+	font-size: 16px;
+	line-height: 1.7;
 }
 
 .home-welcome__description-items {
@@ -25,16 +30,23 @@
 	margin: 10px 0;
 }
 
+.home-welcome__whatsapp-link {
+	text-decoration: underline;
+}
+
 .map-wrapper {
 	width: 100%;
 }
 
 @media(min-width: 768px) {
 	.home-welcome__description-title-main {
-		margin: 40px 0;
-		width: 60%;
+		margin: 40px 0 10px 0;
 		line-height: 1.6;
 		font-size: 24px;
+	}
+
+	.home-welcome__description-text {
+		max-width: 60%;
 	}
 
 	.map-wrapper {
