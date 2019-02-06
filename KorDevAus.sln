@@ -18,8 +18,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KorDevAus.Tests", "test\Kor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KorDevAus", "src\KorDevAus\KorDevAus.csproj", "{10CFC56A-3C49-46B3-A638-7BF974071D87}"
 EndProject
-Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "Resources", "src\Resources\Resources.deployproj", "{0E1F5F6E-9774-49B6-A8DD-9225D373FF06}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,10 +32,6 @@ Global
 		{10CFC56A-3C49-46B3-A638-7BF974071D87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10CFC56A-3C49-46B3-A638-7BF974071D87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10CFC56A-3C49-46B3-A638-7BF974071D87}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0E1F5F6E-9774-49B6-A8DD-9225D373FF06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0E1F5F6E-9774-49B6-A8DD-9225D373FF06}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0E1F5F6E-9774-49B6-A8DD-9225D373FF06}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0E1F5F6E-9774-49B6-A8DD-9225D373FF06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,7 +39,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{8D37FCC4-B03B-4D23-BD58-9E4B18996C07} = {CA54D5FE-004D-464B-B20E-C8793A93FE79}
 		{10CFC56A-3C49-46B3-A638-7BF974071D87} = {FD9E2C22-F876-4FC5-AD9F-5C85FA0AEC70}
-		{0E1F5F6E-9774-49B6-A8DD-9225D373FF06} = {FD9E2C22-F876-4FC5-AD9F-5C85FA0AEC70}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {32CFAAED-6AE9-4FCD-939B-3F2F4CC5A54A}
