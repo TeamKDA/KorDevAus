@@ -1,0 +1,22 @@
+@model MeetupDetailsViewModel
+
+<div class="home-welcome__rsvp-container">
+    @if(Model.RsvpRegistered)
+    {
+        <p>이미 RSVP 등록하셨습니다. 밋업날 만나요 :)</p>
+        <form method="post" asp-controller="Meetups" asp-action="Cancel">
+            <input asp-for="CampaignId" />
+            <input asp-for="EmailId" />
+            <button type="submit" class="home-welcome__rsvp-button">등록을 취소하고 싶습니다</button>
+        </form>
+    }
+    else
+    {
+        <form method="post" asp-controller="Meetups" asp-action="Register">
+            <input asp-for="CampaignId" />
+            <input asp-for="EmailId" />
+            <p>참석하시겠습니까? <span>현재까지 @(Model.CountRegisteredAttendees)명이 등록하였습니다.</span></p>
+            <button class="home-welcome__rsvp-button">네, 참석합니다</button>
+        </form>
+    }
+</div>

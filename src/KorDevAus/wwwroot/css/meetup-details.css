@@ -1,0 +1,52 @@
+.meetup-details__title {
+	margin: 40px 0 0 0;
+}
+
+.meetup-details__items {
+	margin: 0 0 50px 0;
+}
+
+.meetup-details__items--venue {
+	margin-bottom: 0;
+}
+
+.meetup-details__item {
+	margin: 10px 0;
+}
+
+.meetup-details__whatsapp-link {
+	text-decoration: underline;
+}
+
+.map-wrapper {
+	width: 100%;
+}
+
+.meetup-details__rsvp-container {
+	margin: 1rem 0;
+}
+
+.meetup-details__rsvp-button {
+	background-color: #fff;
+	color: #333;
+	border: solid 1px #333;
+	padding: 1rem 4rem;
+	border-radius: 4px;
+	transition: all 0.3s ease;
+}
+
+.meetup-details__rsvp-button:hover {
+	background-color: #ddd;
+}
+
+@media(min-width: 768px) {
+	.meetup-details__title {
+		margin: 40px 0 10px 0;
+		line-height: 1.6;
+		font-size: 24px;
+	}
+
+	.map-wrapper {
+		width: 500px;
+	}
+}

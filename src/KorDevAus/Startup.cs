@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using KorDevAus.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,6 +33,7 @@ namespace KorDevAus
                 .AddAzureADB2C(options => Configuration.Bind("AzureAdB2C", options));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSingleton<IRsvpService, RsvpService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
