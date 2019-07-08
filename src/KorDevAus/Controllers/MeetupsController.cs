@@ -56,19 +56,31 @@ namespace KorDevAus.Controllers
             return View();
         }
 
-        [Route("meetups/2019-06-17")]
-        public async Task<IActionResult> Details20190617([FromQuery]string cid, [FromQuery]string eid) 
+        private async Task<MeetupDetailsViewModel> GetMeetupDetailsViewModel(string cid, string eid) 
         {
             var rsvps = await _rsvpService.GetRsvpByCampaignId(cid);
             var rsvp = rsvps.Find((r) => r.EmailUid == eid);
 
-            var viewModel = new MeetupDetailsViewModel() 
+            return new MeetupDetailsViewModel() 
             {
                 CountRegisteredAttendees = rsvps.Count(r => r.RsvpYn == true),
                 RsvpRegistered = rsvp?.RsvpYn ?? false,
                 CampaignId = cid,
                 EmailId = eid
             };
+        }
+
+        [Route("meetups/2019-07-15")]
+        public async Task<IActionResult> Details20190715([FromQuery]string cid, [FromQuery]string eid) 
+        {
+            MeetupDetailsViewModel viewModel = await GetMeetupDetailsViewModel(cid, eid);
+            return View(viewModel);
+        }
+
+        [Route("meetups/2019-06-17")]
+        public async Task<IActionResult> Details20190617([FromQuery]string cid, [FromQuery]string eid) 
+        {
+            MeetupDetailsViewModel viewModel = await GetMeetupDetailsViewModel(cid, eid);
             return View(viewModel);
         }
 
