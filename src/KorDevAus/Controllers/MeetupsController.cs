@@ -70,6 +70,13 @@ namespace KorDevAus.Controllers
             };
         }
 
+        [Route("meetups/2019-08-19")]
+        public async Task<IActionResult> Details20190819([FromQuery]string cid, [FromQuery]string eid) 
+        {
+            MeetupDetailsViewModel viewModel = await GetMeetupDetailsViewModel(cid, eid);
+            return View(viewModel);
+        }
+
         [Route("meetups/2019-07-15")]
         public async Task<IActionResult> Details20190715([FromQuery]string cid, [FromQuery]string eid) 
         {

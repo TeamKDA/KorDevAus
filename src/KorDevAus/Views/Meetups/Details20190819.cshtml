@@ -1,0 +1,43 @@
+﻿@model MeetupDetailsViewModel
+@{
+    ViewData["Title"] = "2019년 8월 모임";
+}
+
+<div class="meetup-details">
+    <h1 class="page-title">2019년 8월 모임</h1>
+
+    @Html.Partial("_Rsvp")
+
+    <h4 class="meetup-details__title">Topics</h4>
+    <ol class="meetup-details__items">
+        <li class="meetup-details__topic-item">
+            <p>Machine Learning 101 - 박성식</p>
+        </li>
+        <li class="meetup-details__topic-item"><p>Breaktime</p></li>
+        <li class="meetup-details__topic-item">
+            <p>Gatling Load Testing - 박진</p>
+        </li>
+        <li class="meetup-details__topic-item">
+            <p>Hugo, MS Team, DevOps, Netlify - 유정협</p>
+        </li>
+    </ol>
+
+    <h4 class="meetup-details__title">시간</h4>
+    <ul class="meetup-details__items">
+        <li class="meetup-details__item">2019년 8월 19일 오후 5:30 ~ 8:30</li>
+    </ul>
+
+    <h4 class="meetup-details__title">장소</h4>
+    <ul class="meetup-details__items meetup-details__items--venue">
+        <li class="meetup-details__item">Room 03S08, AGL Energy, 699 Bourke Street Docklands, VIC 3008</li>
+    </ul>
+    
+    <div class="map-wrapper">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.795148132041!2d144.9489918157401!3d-37.818266979751485!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d4e3b08f127%3A0x5c8a58cd6791e292!2sAGL+Energy!5e0!3m2!1sen!2sau!4v1565852571446!5m2!1sen!2sau" width="100%" height="200" frameborder="0" style="border:0" allowfullscreen></iframe>
+    </div>
+
+    <h4 class="meetup-details__title meetup-details__title--note">Note</h4>
+    <ul class="meetup-details__items">
+        <li class="meetup-details__item">만일의 경우 <a class="meetup-details__whatsapp-link" href="http://bit.ly/mel-ko-dev" target="_blank">왓츠앱</a>이나 권효중(0401 757 089)에게 메세지를 남겨주세요 </li>
+    </ul>
+</div>
